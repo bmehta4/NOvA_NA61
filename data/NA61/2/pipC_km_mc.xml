@@ -170,11 +170,11 @@
       <prange>4.0 7.0</prange>
       <thetarange>0.18 0.24</thetarange>
     </pipC_km_mc_33>
-      <pipC_pim_mc_34>
+      <pipC_km_mc_34>
       <cvmc>0.07436627818194555</cvmc>
       <prange>0.4 1.0</prange>
       <thetarange>0.3 0.36</thetarange>
-    </pipC_pip_mc_34>
+    </pipC_km_mc_34>
   </pipC_km_mc>
 </mcbins>
 
