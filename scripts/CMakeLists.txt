@@ -1,4 +1,6 @@
 install_scripts()
 
-file(GLOB xml_files *.xml)
-install( FILES ${xml_files} DESTINATION ${product}/${version}/xml/ )
+install_fw(LIST
+           inputs_default.xml
+           inputs_imap.xml
+           inputs_mipp_numi.xml)

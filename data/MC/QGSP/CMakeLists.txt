@@ -1,2 +1,7 @@
-file(GLOB root_files *.root)
-install( FILES ${root_files} DESTINATION ${product}/${version}/data/MC/QGSP )
+
+install( FILES
+           kam_QGSP.root
+           kap_QGSP.root
+           pim_QGSP.root
+           pip_QGSP.root
+         DESTINATION data/MC/QGSP )
