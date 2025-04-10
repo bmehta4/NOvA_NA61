@@ -1,2 +1,6 @@
-file(GLOB root_files *.root)
-install( FILES ${root_files} DESTINATION ${product}/${version}/data/NA49 )
+
+install( FILES
+           data_pC_neu_XS.root
+           data_pC_prt_XS.root
+           data_pC_XS.root
+         DESTINATION data/NA49 )

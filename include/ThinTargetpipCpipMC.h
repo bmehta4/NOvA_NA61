@@ -46,7 +46,7 @@ namespace NeutrinoFluxReweight{
     
     std::vector<double> v_pmin,v_pmax,v_thetamin,v_thetamax;
     bool ranges_already_filled;
-    double proton_no_interacting;
+    //double proton_no_interacting; // unused
 
     static ThinTargetpipCpipMC* instance;
     
