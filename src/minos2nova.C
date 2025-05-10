@@ -20,7 +20,7 @@ const int Nhel  = 2;
 const int Nbins        = 101;
 const int Nbins_plus_1 = 102;
 const double binw      = 0.2; //GeV
-const double emin      =   0.;
+//const double emin      =   0.; // unused
 const double emax      = 120.;
 const char* hel[Nhel]  = {"numu","numubar"};
 const char* det[Ndet]  = {"MINOS_ND","NOvA_ND","NOvA_FD"};
@@ -144,11 +144,12 @@ void minos2nova(const char* inputFiles, const char* outputFile, const char* opti
     }//end of det
   }//end of hel
 
+// array bounds are ‘TH2D* [2]’ - presume that htrans[i][0] and htrans[i][1] are intended
   std::cout<<"storing general histos"<<std::endl;
   fOut->cd();
   for(int i=0;i<Nhel;i++){
+    htrans[i][0]->Write();
     htrans[i][1]->Write();
-    htrans[i][2]->Write();
     fOut->mkdir(Form("h%s",hel[i]));
     fOut->cd(Form("h%s",hel[i]));
     for(int j=0;j<Ndet;j++){
