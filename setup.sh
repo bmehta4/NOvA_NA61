@@ -1,21 +1,20 @@
 #!/bin/bash
 
 setup_for_nova(){
-    echo "Sourcing NOvA setup script"
-    source /cvmfs/nova.opensciencegrid.org/novasoft/slf7/novasoft/setup/setup_nova.sh "$@"
-    
+    source /cvmfs/nova.opensciencegrid.org/externals/setup
+    setup fife_utils
     # setting up for the grid
     export IFDH_GRIDFTP_EXTRA="-st 10" #set ifdh cp stall timeout to 10 sec
     export IFDH_CP_MAXRETRIES=2
-    
+    setup ifdhc v2_7_2 -q e26:prof:p3915
+    setup dk2nudata v01_10_01h -q e26:prof
+    setup nufinder v1_02_01
+    setup boost v1_82_0 -q e26:prof
     # bash magic pulled off of stack exchange
     # gets the full path to the location of setup.sh
     export PPFX_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
     echo "setting PPFX_DIR=${PPFX_DIR}"
     export LD_LIBRARY_PATH=$PPFX_DIR/lib:$LD_LIBRARY_PATH
-    if [ -z "${_CONDOR_SCRATCH_DIR}" ]; then
-      kx509; voms-proxy-init -rfc -valid 196:00 -noregen -voms nova:/nova/Role=Analysis
-    fi
 }
 
 setup_for_dune(){
@@ -33,9 +32,8 @@ setup_for_dune(){
     # minerva doc-10551, Dec 2014
     # Setup grid submit tools if not on a grid node
     if [ -z "${_CONDOR_SCRATCH_DIR}" ]; then
-        echo "_CONDOR_SCRATCH_DIR is not set... so I'm assuming we're not running on a grid node.... Setting up jobsub  tools."
         setup jobsub_client
-	/cvmfs/dune.opensciencegrid.org/products/dune/duneutil/v09_42_00/bin/setup_fnal_security -f -b
+        /cvmfs/dune.opensciencegrid.org/products/dune/duneutil/v09_42_00/bin/setup_fnal_security -f -b
     fi
 
     # bash magic pulled off of stack exchange
@@ -63,7 +61,7 @@ setup_for_other(){
     setup jobsub_client
     setup ifdhc
 
-    #This is for MINERvA. Change accordingly. 
+    #This is for MINERvA. Change accordingly.
     export IFDH_BASE_URI="http://samweb-minerva.fnal.gov:20004/sam/minerva/api"
 
     # bash magic pulled off of stack exchange
@@ -89,11 +87,12 @@ elif echo "$HOST" | grep 'dune'; then
     else
         echo "This is a dune machine. You must add 1 argument. REF for reference and OPT for optimized"
     fi
-else 
+else
     # the default mode is NuMI
     export MODE="NUMI"
     echo "WARNING: This setup script might be outdated if you are not on nova or dune machines."
     echo "Setting up for $HOST in MODE $MODE"
-    setup_for_other
+    #setup_for_other, BHUMIKA, so that I can setup nova always, Roberts scripts
+    setup_for_nova
 fi
 
